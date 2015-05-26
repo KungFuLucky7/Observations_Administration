@@ -1,0 +1,1323 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE auth_group (
+    id integer NOT NULL,
+    name character varying(80) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO tw1123;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO tw1123;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE auth_group_id_seq OWNED BY auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO tw1123;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO tw1123;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE auth_group_permissions_id_seq OWNED BY auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE auth_permission (
+    id integer NOT NULL,
+    name character varying(50) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO tw1123;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO tw1123;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE auth_permission_id_seq OWNED BY auth_permission.id;
+
+
+--
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone NOT NULL,
+    is_superuser boolean NOT NULL,
+    username character varying(30) NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    email character varying(75) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.auth_user OWNER TO tw1123;
+
+--
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE auth_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_groups OWNER TO tw1123;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE auth_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_groups_id_seq OWNER TO tw1123;
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE auth_user_groups_id_seq OWNED BY auth_user_groups.id;
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE auth_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_id_seq OWNER TO tw1123;
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE auth_user_id_seq OWNED BY auth_user.id;
+
+
+--
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE auth_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_user_user_permissions OWNER TO tw1123;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE auth_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO tw1123;
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE auth_user_user_permissions_id_seq OWNED BY auth_user_user_permissions.id;
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    user_id integer NOT NULL,
+    content_type_id integer,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO tw1123;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO tw1123;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE django_admin_log_id_seq OWNED BY django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE django_content_type (
+    id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO tw1123;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO tw1123;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE django_content_type_id_seq OWNED BY django_content_type.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO tw1123;
+
+--
+-- Name: django_site; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE django_site (
+    id integer NOT NULL,
+    domain character varying(100) NOT NULL,
+    name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public.django_site OWNER TO tw1123;
+
+--
+-- Name: django_site_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE django_site_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_site_id_seq OWNER TO tw1123;
+
+--
+-- Name: django_site_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE django_site_id_seq OWNED BY django_site.id;
+
+
+--
+-- Name: observations_observation; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE observations_observation (
+    id integer NOT NULL,
+    species character varying(200) NOT NULL,
+    common_name character varying(200) NOT NULL,
+    curated boolean NOT NULL,
+    author character varying(200) NOT NULL,
+    pub_date timestamp with time zone NOT NULL,
+    edited_by_id integer,
+    edited_on timestamp with time zone,
+    observation_type character varying(20) NOT NULL,
+    location character varying(200) NOT NULL,
+    gps character varying(42) NOT NULL,
+    image character varying(200),
+    description text NOT NULL,
+    revision_notes text
+);
+
+
+ALTER TABLE public.observations_observation OWNER TO tw1123;
+
+--
+-- Name: observations_observation_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE observations_observation_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.observations_observation_id_seq OWNER TO tw1123;
+
+--
+-- Name: observations_observation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE observations_observation_id_seq OWNED BY observations_observation.id;
+
+
+--
+-- Name: polls_choice; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE polls_choice (
+    id integer NOT NULL,
+    poll_id integer NOT NULL,
+    choice_text character varying(200) NOT NULL,
+    votes integer NOT NULL
+);
+
+
+ALTER TABLE public.polls_choice OWNER TO tw1123;
+
+--
+-- Name: polls_choice_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE polls_choice_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.polls_choice_id_seq OWNER TO tw1123;
+
+--
+-- Name: polls_choice_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE polls_choice_id_seq OWNED BY polls_choice.id;
+
+
+--
+-- Name: polls_poll; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE polls_poll (
+    id integer NOT NULL,
+    question character varying(200) NOT NULL,
+    pub_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.polls_poll OWNER TO tw1123;
+
+--
+-- Name: polls_poll_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE polls_poll_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.polls_poll_id_seq OWNER TO tw1123;
+
+--
+-- Name: polls_poll_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE polls_poll_id_seq OWNED BY polls_poll.id;
+
+
+--
+-- Name: south_migrationhistory; Type: TABLE; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE TABLE south_migrationhistory (
+    id integer NOT NULL,
+    app_name character varying(255) NOT NULL,
+    migration character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.south_migrationhistory OWNER TO tw1123;
+
+--
+-- Name: south_migrationhistory_id_seq; Type: SEQUENCE; Schema: public; Owner: tw1123
+--
+
+CREATE SEQUENCE south_migrationhistory_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.south_migrationhistory_id_seq OWNER TO tw1123;
+
+--
+-- Name: south_migrationhistory_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: tw1123
+--
+
+ALTER SEQUENCE south_migrationhistory_id_seq OWNED BY south_migrationhistory.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_group ALTER COLUMN id SET DEFAULT nextval('auth_group_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_permission ALTER COLUMN id SET DEFAULT nextval('auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_user ALTER COLUMN id SET DEFAULT nextval('auth_user_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_user_groups ALTER COLUMN id SET DEFAULT nextval('auth_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('auth_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY django_admin_log ALTER COLUMN id SET DEFAULT nextval('django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY django_content_type ALTER COLUMN id SET DEFAULT nextval('django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY django_site ALTER COLUMN id SET DEFAULT nextval('django_site_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY observations_observation ALTER COLUMN id SET DEFAULT nextval('observations_observation_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY polls_choice ALTER COLUMN id SET DEFAULT nextval('polls_choice_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY polls_poll ALTER COLUMN id SET DEFAULT nextval('polls_poll_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY south_migrationhistory ALTER COLUMN id SET DEFAULT nextval('south_migrationhistory_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY auth_group (id, name) FROM stdin;
+1	Administrators
+2	Authenticated Users
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('auth_group_id_seq', 2, true);
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
+1	1	10
+2	1	11
+3	1	12
+4	1	13
+5	1	14
+6	1	15
+7	1	19
+8	1	20
+9	1	21
+10	1	22
+11	1	23
+12	1	24
+13	1	25
+14	1	26
+15	1	27
+16	1	28
+17	1	29
+18	1	30
+19	2	22
+20	2	23
+21	2	24
+22	2	25
+23	2	26
+24	2	27
+25	2	28
+\.
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('auth_group_permissions_id_seq', 25, true);
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add permission	1	add_permission
+2	Can change permission	1	change_permission
+3	Can delete permission	1	delete_permission
+4	Can add group	2	add_group
+5	Can change group	2	change_group
+6	Can delete group	2	delete_group
+7	Can add user	3	add_user
+8	Can change user	3	change_user
+9	Can delete user	3	delete_user
+10	Can add content type	4	add_contenttype
+11	Can change content type	4	change_contenttype
+12	Can delete content type	4	delete_contenttype
+13	Can add session	5	add_session
+14	Can change session	5	change_session
+15	Can delete session	5	delete_session
+16	Can add site	6	add_site
+17	Can change site	6	change_site
+18	Can delete site	6	delete_site
+19	Can add log entry	7	add_logentry
+20	Can change log entry	7	change_logentry
+21	Can delete log entry	7	delete_logentry
+22	Can add poll	8	add_poll
+23	Can change poll	8	change_poll
+24	Can delete poll	8	delete_poll
+25	Can add choice	9	add_choice
+26	Can change choice	9	change_choice
+27	Can delete choice	9	delete_choice
+28	Can add observation	10	add_observation
+29	Can change observation	10	change_observation
+30	Can delete observation	10	delete_observation
+31	Can add migration history	11	add_migrationhistory
+32	Can change migration history	11	change_migrationhistory
+33	Can delete migration history	11	delete_migrationhistory
+\.
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('auth_permission_id_seq', 33, true);
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+2	pbkdf2_sha256$10000$tG0RZtxm2VZb$FuaspBDh3sjXY9IoXSdP8SgOzYPmhJrj+Z8aaCvSRqk=	2013-11-29 18:06:16.487581-08	f	Lisa	Lisa	Paris	lisaparis@mail.sfsu.edu	t	t	2013-11-29 17:58:39-08
+3	pbkdf2_sha256$10000$GJ6y13dw0ngf$qjb2VmOFA/iTUsrDUkFHmlIYQylrjNFUgQP/nJVsyoo=	2013-12-04 22:17:09.038881-08	f	Tom	Tom	Gates	tomgates@mail.sfsu.edu	t	t	2013-11-29 17:59:44-08
+1	pbkdf2_sha256$10000$PYzM2KVUYrFb$EDgLcmDkG4JsS2Tud3il/CaWxA269kYJS0NviVEeAHc=	2013-12-16 15:32:10.152412-08	t	tw1123	Terry	Wong	tw1123@mail.sfsu.edu	t	t	2013-11-29 15:51:25-08
+\.
+
+
+--
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY auth_user_groups (id, user_id, group_id) FROM stdin;
+1	2	2
+2	3	1
+\.
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 2, true);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('auth_user_id_seq', 3, true);
+
+
+--
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY django_admin_log (id, action_time, user_id, content_type_id, object_id, object_repr, action_flag, change_message) FROM stdin;
+1	2013-11-29 16:22:04.088726-08	1	10	1	Lycaeides melissa samuelis	1	
+2	2013-11-29 17:12:07.386538-08	1	10	None	Lycaeides melissa samuelis	1	
+3	2013-11-29 17:13:24.787236-08	1	10	None	Lycaeides melissa samuelis	1	
+4	2013-11-29 17:23:34.022904-08	1	10	1	Apis mellifera	1	
+5	2013-11-29 17:27:17.140174-08	1	10	1	Apis mellifera	2	No fields changed.
+6	2013-11-29 17:45:51.015413-08	1	10	1	Apis mellifera	1	
+7	2013-11-29 17:49:52.368569-08	1	10	1	Apis mellifera	1	
+8	2013-11-29 17:51:40.934154-08	1	10	2	Bombus affinis	1	
+9	2013-11-29 17:53:59.43304-08	1	10	3	Bombus franklini	1	
+10	2013-11-29 17:55:48.367788-08	1	2	1	Administrators	1	
+11	2013-11-29 17:56:11.378956-08	1	2	2	Authenticated Users	1	
+12	2013-11-29 17:58:19.982843-08	1	8	1	What's your favorite color?	1	
+13	2013-11-29 17:58:40.000135-08	1	3	2	Lisa	1	
+14	2013-11-29 17:59:29.125297-08	1	3	2	Lisa	2	Changed password, first_name, last_name, email, is_staff and groups.
+15	2013-11-29 17:59:45.202563-08	1	3	3	Tom	1	
+16	2013-11-29 18:00:13.626446-08	1	3	3	Tom	2	Changed password, first_name, last_name, email, is_staff and groups.
+17	2013-11-29 18:00:36.533541-08	1	3	1	tw1123	2	Changed password, first_name and last_name.
+18	2013-11-29 18:03:37.04736-08	3	10	4	Coleoptera 	1	
+19	2013-11-29 18:05:07.504911-08	1	10	1	Apis mellifera	2	Changed curated.
+20	2013-11-29 18:06:03.348772-08	3	10	4	Coleoptera 	2	Changed curated.
+21	2013-11-29 18:08:36.176011-08	2	10	5	Danaus plexippus	1	
+22	2013-11-29 18:12:09.259846-08	3	10	6	Halictidae	1	
+23	2013-11-29 18:15:03.087549-08	1	10	7	Lycaeides melissa samuelis	1	
+24	2013-11-29 18:32:35.566162-08	1	10	7	Lycaeides melissa samuelis	2	Changed curated.
+25	2013-11-29 18:52:57.839155-08	1	10	1	Apis mellifera	2	Changed revision_notes.
+26	2013-11-30 12:33:32.389131-08	1	10	5	Danaus plexippus	2	Changed gps.
+27	2013-11-30 13:34:11.593366-08	1	10	11	Svastra obliqua	1	
+28	2013-11-30 14:57:03.381197-08	1	10	11	Svastra obliqua	2	Changed curated.
+29	2013-12-04 22:18:08.769478-08	3	10	3	Bombus franklini	2	Changed revision_notes and curated.
+30	2013-12-04 22:20:12.499503-08	3	10	3	Bombus franklini	2	No fields changed.
+31	2013-12-04 22:20:34.239106-08	1	10	3	Bombus franklini	2	No fields changed.
+32	2013-12-04 22:21:56.435716-08	3	10	3	Bombus franklini	2	Changed curated.
+33	2013-12-04 22:22:09.93082-08	1	10	3	Bombus franklini	2	No fields changed.
+34	2013-12-04 22:22:28.164043-08	3	10	3	Bombus franklini	2	Changed curated.
+\.
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('django_admin_log_id_seq', 34, true);
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY django_content_type (id, name, app_label, model) FROM stdin;
+1	permission	auth	permission
+2	group	auth	group
+3	user	auth	user
+4	content type	contenttypes	contenttype
+5	session	sessions	session
+6	site	sites	site
+7	log entry	admin	logentry
+8	poll	polls	poll
+9	choice	polls	choice
+10	observation	observations	observation
+11	migration history	south	migrationhistory
+\.
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('django_content_type_id_seq', 11, true);
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY django_session (session_key, session_data, expire_date) FROM stdin;
+ckpux87wowecwzp2lunmuyj8jtvi6s67	NDE5M2ZhNjNkNmI1NTE4ZDhhMTc4MjcyN2JjNzAzMmRhMWU4MDUwNTqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLAXUu	2013-12-13 21:22:21.570376-08
+xv7k731edktrxgiqxjw6s7xziyt05ukx	OGRjNGZhMTQzMGU4Y2U3OTIxOGIwN2JkOTU2MDIzMjM2MjE4MmZjMzqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLA3Uu	2013-12-18 22:17:09.050097-08
+efjlhnxbyhlfjpqq535wzhivi3sy48wi	NDE5M2ZhNjNkNmI1NTE4ZDhhMTc4MjcyN2JjNzAzMmRhMWU4MDUwNTqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLAXUu	2013-12-24 14:57:05.949107-08
+zcpyk55qpvycyp7ivpjh4u1310gzflhd	NDE5M2ZhNjNkNmI1NTE4ZDhhMTc4MjcyN2JjNzAzMmRhMWU4MDUwNTqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLAXUu	2013-12-30 15:32:10.196615-08
+\.
+
+
+--
+-- Data for Name: django_site; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY django_site (id, domain, name) FROM stdin;
+1	example.com	example.com
+\.
+
+
+--
+-- Name: django_site_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('django_site_id_seq', 1, true);
+
+
+--
+-- Data for Name: observations_observation; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY observations_observation (id, species, common_name, curated, author, pub_date, edited_by_id, edited_on, observation_type, location, gps, image, description, revision_notes) FROM stdin;
+6	Halictidae	Halictid Bees	f	Sean McCann	2013-11-29 18:12:09.25-08	3	2013-11-29 18:12:09.25-08	Casual	New York, USA	40.7143528,-74.0059731	uploads/halictidae.jpg	Sweat bees, also referred to as halictid bees, (Halictidae) are so named for their habit of landing on people and licking the perspiration from the skin in order to obtain the salt. Bees in this family are common throughout North America, with over 1,000 species occurring in North and Central America.\r\n\r\nBees in this family are small to medium sized, ranging from 4 to 10 mm. They generally are black or brownish colored; however, there are species of sweat bees that are bright metallic green and some that have brassy yellow or red markings. Males tend to have yellow faces.\r\n\r\nSweat bees build nests in clay soil, sandy banks, and cavities in weeds or shrubs.	\N
+2	Bombus affinis	Rusty-patched Bumblebee	f	Johanna James-Heinz	2013-11-29 17:51:40.928-08	1	2013-11-29 17:51:40.928-08	Traveling	New York, USA	40.7143528,-74.0059731	uploads/bombus_affinis.jpg	The Rusty-patched Bumblebee (Bombus affinis) was at one time among the more common and widespread bumblebees in eastern North America. However, this is no longer the case. The first decade of the 21st century saw growing concern about declining pollinator populations in general in several regions of the world, with particular attention focused on bees, and much of the available data on declining bee populations has focused on bumblebees. Although populations of some bumblebee species appear to be robust, many others have apparently gone extinct in recent years or suffered dramatic declines. Bombus affinis is one of several North American bumblebee species that have experienced clear declines. Colla and Packer (2008) documented an impoverishment of the bumblebee community in general in southern Ontario (Canada) between the early 1970s and the first decade of the 21st century and found that B. affinis, in particular, declined dramatically in abundance not only in southern Ontario but throughout its native range. There is evidence of declines in three other North American bumblebees as well (all four belong to the subgenus Bombus): B. franklini and B. occidentalis in the west and B. terricola in the east. Bombus franklini, which had a historically small geographic distribution, is thought to be at the brink of extinction (or possibly extinct). Bombus affinis, B. terricola, and B. occidentalis have much larger historical ranges, but have disappeared from numerous sites where they were previously common. (Colla and Packer 2008 and references therein)	\N
+4	Coleoptera 	Beetles	t	Lynette Schimming	2013-11-29 18:03:37.041-08	3	2013-11-29 18:06:03.341-08	Traveling	San Francisco, USA	37.7749295,-122.41941550000001	uploads/coleoptera.jpg	The Coleoptera, or beetles, includes many commonly encountered insects such as ladybird beetles (family Coccinellidae), click beetles (Elateridae), scarabs (Scarabaeidae), and fireflies (Lampyridae). They live throughout the world (except Antarctica), but are most speciose in the tropics.\r\n\r\nThe oldest beetle fossils are from the Lower Permian (about 265 million years old; Ponomarenko, 1995); since then the group has diversified into many different forms. They range in size from minute featherwing beetles (Ptiliidae), adults of which are as small as 0.3 mm long, to the giant Goliath and Hercules beetles (Scarabaeidae), which can be well over 15 cm. While most species are phytophagous, many are predacious, or fungivores, or are parasitoids. They communicate to one another in many ways, either by use of chemicals (e.g. pheromones), sounds (e.g. stridulation), or by visual means (e.g. fireflies). They live in rainforest canopies, the driest deserts, in lakes, and above treeline on mountains.\r\n\r\nIn one sense the most unusual property of beetles is not some aspect of their structure or natural history, but their sheer number. There are more known species of Coleoptera than any other group of organisms, with over 350,000 described species. Perhaps the most famous quote about beetles comes from the great population geneticist J.B.S. Haldane, who was asked what might be learned about a Creator by examining the world. His response: "an inordinate fondness for beetles" (Fisher, 1988).	\N
+5	Danaus plexippus	Monarch Butterfly	f	Ted Kropiewnicki	2013-11-29 18:08:36.17-08	2	2013-11-29 18:08:36.17-08	Stationary	San Francisco, USA	0,0	uploads/danaus_plexippus.jpg	The monarch is one of the best known butterfly species. Although native to North and South America, it has expanded its distribution to Australia, many Pacific islands, and a few places in Europe. Monarch larvae, like those of many other Danaini, feed on milkweeds of the family Asclepiadaceae, from which they sequester cardiac glycosides that often render them unpalatable to potential predators. The species is perhaps best known for its annual migrations, from eastern North America to the mountains of central Mexico, and from western North America to the coast of California. The butterflies rest for the cool winter months in large aggregations which may contain tens of millions of individuals.	\N
+8	Megachile sculpturalis	Giant Resin Bee	f	Anita 	2013-11-30 00:00:00-08	\N	\N	Casual	Asheville, NC, USA	35.5950581, -82.551486899999	uploads/megachile_sculpturalis.jpg	The giant resin bee (Megachile sculpturalis) is so named because it is larger than most other leafcutter bees, ranging in size from 14 to 24 mm long, and because it uses its strong jaws to collect plant resin to seal the cells in which it lays eggs. This bee is native to Asia, but was inadvertently transported to the United States in the 1990's, where it was first identified in North Carolina in 1994. It is now present in most of the southeastern United States. This bee resembles bumble (Bombus spp.) and carpenter (Xylocopa spp.) bees, except that it lacks both the hairy abdomen that is present on bumble bees and the shiny abdomen that is present on carpenter bees.	\N
+10	Svastra obliqua	Sunflower Bee	t	Lynette Schimming	2013-11-30 13:34:11.478774-08	1	2013-11-30 14:57:03.368105-08	Traveling	Trenton, NJ, USA	40.2170534,-74.74293840000001	uploads/svastra_obliqua.jpg	The sunflower bee, Svastra obliqua, is 14.5 to 16 mm in length, and is one of the larger Svastra spp. Two forms of this bee exist: one has prominent bands of pale hair on the abdomen and in the other these hairs are absent and all hairs are dark or there are scattered patches of pale hair.\r\n\r\nThis bee is found from Mexico to Montana, and east to Quebec, New Jersey, Tennessee, and Florida, it is one of the most common and abundant species in the Svastra genus. It is also one of the most common pollinators of hybrid sunflower crops.	\N
+9	Osmia lignaria	Blue Orchard Bee	f	USDA	2013-11-30 12:57:03.072-08	\N	\N	Stationary	Halifax, NS, Canada	44.6488625, -63.5753196	uploads/osmia_lignaria.jpg	The blue orchard bee (Osmia lignaria), also known as the orchard mason bee, mason bee, orchard bee, and Osmia bee, is named for its shiny blue coloration and the fact that it pollinates orchard crops. These bees are native to North America and are found throughout most of the United States. However, this bee is not established in the deep south and is rare in the Great Plains.\n\nThe blue orchard bee is slightly smaller than a honey bee; males are approximately 11 to 12 mm and females are approximately 14 mm in length. They are a shiny dark blue color. Males have longer antennae and an additional tuft of light colored hair on their faces than females. Females have hairs on the underside of their abdomens adapted for carrying pollen.	\N
+1	Apis mellifera	European Honey Bee	t	John Baker	2013-11-29 17:49:52.361-08	1	2013-11-29 18:05:07.494-08	Stationary	London, UK	51.51121389999999,-0.11982439999997041	uploads/apis_mellifera.jpg	The European honey bee, also known as the common or western honey bee (Apis mellifera) is so named because it produces large amounts of honey. It is believed that the honey bee originated in Africa and spread to northern Europe, India, and China. The honey bee is not native to North America, but was brought here with the first colonists. The honey bee is now distributed world wide.\r\n\r\nEuropean honey bees are variable in color, but are some shade of black or brown intermixed with yellow. The bee ranges from 3/8 to 3/4 of an inch long, with workers being the smallest and the queen being the largest. A queen bee is elongate and has a straight stinger with no barbs. A worker bee has hind legs specialized for collecting pollen - each leg is flattened and covered with long fringed hairs that form a pollen basket. A worker bee's stinger has barbs. A drone bee is stout-bodied and has large eyes.\r\n\r\nWild European honey bee nests are found in hollow trees or man-made structures. Managed colonies are often kept in wooden hives. Flowers in meadows, open woods, agricultural areas, and yards and gardens are visited by worker bees.	N/A
+7	Lycaeides melissa samuelis	Karner Blue Butterfly	t	Bill Bouton	2013-11-29 18:15:03.072-08	1	2013-11-29 18:32:35.557-08	Traveling	Gary, USA	41.5933696,-87.34642710000003	uploads/lycaeides_melissa_samuelis.jpg	The Karner blue butterfly (Lycaeides melissa samuelis), less commonly known as the orange-bordered blue and Edward's blue butterfly, is named for the location in which it was first described near Albany, New York. Historically this species occurred from Minnesota to Maine. Populations currently exist in Indiana, Michigan, Minnesota, New Hampshire, New York, and Wisconsin, with the largest populations occurring in Michigan and Wisconsin. Reintroductions are occurring in New Hampshire, Indiana, and Ohio.\r\n\r\nKarner blue butterflies have a wing span of 2.5 cm, with males being slightly smaller than females. Males' wings are a violet-blue color with black margins and white fringed edges on the top. Females' wings are predominantly dark gray-brown or black, with the violet color occurring on the central part of the wing. Orange crescents are typically present on the hind wings of females. The underside or ventral side of both male and female wings are gray with black spots and have orange crescents and metallic spots. Eggs are small, slightly flattened, and pale green.\r\n\r\nKarner blue butterflies can only survive where wild lupine plants are found, typically in the sandy soils of pine barrens and oak savannas.\r\n\r\nOver the last 100 years, this species has declined by 99% and was federally listed as endangered in 1992. The United States Fish and Wildlife Service currently has remaining populations listed as stable. Threats include habitat loss, fragmentation, and modifications such as fire suppression or other disturbances.	\N
+3	Bombus franklini	Franklin's Bumble Bee	t	Dana Campbell	2013-11-29 17:53:59.427-08	3	2013-12-04 22:22:28.153413-08	Area	Ashland, USA	42.1945758,-122.70947669999998	uploads/bombus_franklini.jpg	Franklin's bumble bee (Bombus franklini) is a generalist forager and is known to nectar and collect pollen from several wildflowers, such as lupine (Lupinus spp.), California poppy (Eschscholzia californica), horsemint (Agastache urticofolia), mountain penny-royal (Monardella odoratissima), and vetch (Vicia spp.).\r\n\r\nThe Franklin's bumble bee can be distinguished from other bumble bees by its distinctive pattern of yellow on the thorax that extends rearward forming an inverted U-shape. It has an almost completely black abdomen with two small white spots at the tip. Females have a predominantly black face with yellow on top of the head, while males have mostly yellow on the front of their faces.\r\n\r\nThe Franklin's bumble bee has the smallest range of any bumble bee in the world, occurring between southern Oregon and northern California between the Coast and Sierra Cascade Ranges. It's range encompasses 190 miles north to south and 70 miles east to west. In the past the Franklin's bumble bee was abundant in its range, but is now feared to be extinct or nearly so. Surveys throughout the bee's range were unable to locate any individuals in 2004, 2005, and 2007; one worker bee was found in 2006. Franklin's bumble bee underwent extreme declines in the late 1990's, most likely because of exotic diseases that were inadvertently introduced through commercial bumble bee importations for greenhouse pollination of tomatoes. Other threats include habitat loss, pesticides, and pollution.	It's a critically endangered bee of the western United States.
+\.
+
+
+--
+-- Name: observations_observation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('observations_observation_id_seq', 11, true);
+
+
+--
+-- Data for Name: polls_choice; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY polls_choice (id, poll_id, choice_text, votes) FROM stdin;
+1	1	Blue	3
+2	1	Black	3
+3	1	Red	1
+4	1	Green	1
+5	1	Purple	1
+6	1	Yellow	2
+7	1	Orange	0
+8	1	Silver	3
+9	1	Gold	2
+10	1	White	1
+11	1	Gray	1
+\.
+
+
+--
+-- Name: polls_choice_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('polls_choice_id_seq', 11, true);
+
+
+--
+-- Data for Name: polls_poll; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY polls_poll (id, question, pub_date) FROM stdin;
+1	What's your favorite color?	2013-11-29 17:58:00-08
+\.
+
+
+--
+-- Name: polls_poll_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('polls_poll_id_seq', 1, true);
+
+
+--
+-- Data for Name: south_migrationhistory; Type: TABLE DATA; Schema: public; Owner: tw1123
+--
+
+COPY south_migrationhistory (id, app_name, migration, applied) FROM stdin;
+1	observations	0001_initial	2013-11-29 18:47:47.93053-08
+2	observations	0002_auto__add_field_observation_revision_notes	2013-11-29 18:52:24.469321-08
+3	observations	0003_auto__chg_field_observation_edited_on	2013-11-30 12:23:52.082032-08
+4	observations	0004_auto__chg_field_observation_pub_date	2013-12-04 22:14:19.431559-08
+\.
+
+
+--
+-- Name: south_migrationhistory_id_seq; Type: SEQUENCE SET; Schema: public; Owner: tw1123
+--
+
+SELECT pg_catalog.setval('south_migrationhistory_id_seq', 4, true);
+
+
+--
+-- Name: auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions_group_id_permission_id_key; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_key UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission_content_type_id_codename_key; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_key UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups_user_id_group_id_key; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_key UNIQUE (user_id, group_id);
+
+
+--
+-- Name: auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id_permission_id_key; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_key UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type_app_label_model_key; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_key UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: django_site_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY django_site
+    ADD CONSTRAINT django_site_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: observations_observation_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY observations_observation
+    ADD CONSTRAINT observations_observation_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: polls_choice_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY polls_choice
+    ADD CONSTRAINT polls_choice_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: polls_poll_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY polls_poll
+    ADD CONSTRAINT polls_poll_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: south_migrationhistory_pkey; Type: CONSTRAINT; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+ALTER TABLE ONLY south_migrationhistory
+    ADD CONSTRAINT south_migrationhistory_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group_name_like; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX auth_group_name_like ON auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX auth_group_permissions_group_id ON auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX auth_group_permissions_permission_id ON auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX auth_permission_content_type_id ON auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: auth_user_groups_group_id; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX auth_user_groups_group_id ON auth_user_groups USING btree (group_id);
+
+
+--
+-- Name: auth_user_groups_user_id; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX auth_user_groups_user_id ON auth_user_groups USING btree (user_id);
+
+
+--
+-- Name: auth_user_user_permissions_permission_id; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX auth_user_user_permissions_permission_id ON auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX auth_user_user_permissions_user_id ON auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_like; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX auth_user_username_like ON auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: django_admin_log_content_type_id; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX django_admin_log_content_type_id ON django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX django_admin_log_user_id ON django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX django_session_expire_date ON django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_like; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX django_session_session_key_like ON django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: observations_observation_edited_by_id; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX observations_observation_edited_by_id ON observations_observation USING btree (edited_by_id);
+
+
+--
+-- Name: polls_choice_poll_id; Type: INDEX; Schema: public; Owner: tw1123; Tablespace: 
+--
+
+CREATE INDEX polls_choice_poll_id ON polls_choice USING btree (poll_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_permission_id_fkey FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups_group_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_fkey FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions_permission_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_permission_id_fkey FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: content_type_id_refs_id_d043b34a; Type: FK CONSTRAINT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_permission
+    ADD CONSTRAINT content_type_id_refs_id_d043b34a FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log_content_type_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_fkey FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log_user_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: group_id_refs_id_f4b32aac; Type: FK CONSTRAINT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_group_permissions
+    ADD CONSTRAINT group_id_refs_id_f4b32aac FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: observations_observation_edited_by_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY observations_observation
+    ADD CONSTRAINT observations_observation_edited_by_id_fkey FOREIGN KEY (edited_by_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: polls_choice_poll_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY polls_choice
+    ADD CONSTRAINT polls_choice_poll_id_fkey FOREIGN KEY (poll_id) REFERENCES polls_poll(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: user_id_refs_id_40c41112; Type: FK CONSTRAINT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_user_groups
+    ADD CONSTRAINT user_id_refs_id_40c41112 FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: user_id_refs_id_4dc23c39; Type: FK CONSTRAINT; Schema: public; Owner: tw1123
+--
+
+ALTER TABLE ONLY auth_user_user_permissions
+    ADD CONSTRAINT user_id_refs_id_4dc23c39 FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

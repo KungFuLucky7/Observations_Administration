@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block head %}
+{% block title %}{{ title }} | {% trans 'Observations Site Admin' %}{% endblock %}
+{% block extrahead %}
+<link rel="icon" type="image/png" href="/media/favicon.png"/>
+{% endblock %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{% trans 'Observations Administration' %}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
